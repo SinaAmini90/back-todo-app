@@ -12,7 +12,7 @@ import {
 
 const router = express.Router();
 router.get("/api/user/:id", userIdValidator, getUserByIdController);
-router.post("/api/user", userInfoValidator, createUserController);
+router.post("/api/signup", userInfoValidator, createUserController);
 router.put("/api/user", userEditValidator, updateUserController);
 
 export { router };
