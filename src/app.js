@@ -14,7 +14,7 @@ app.get("/test", (req, res) => {
   });
 });
 
-app.use(tasksRouter);
+app.use("api/task", tasksRouter);
 app.use(userRouter);
 
 app.use(notFoundHandler);

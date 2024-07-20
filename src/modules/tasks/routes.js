@@ -10,15 +10,15 @@ import { userIdValidator } from "../users/validations.js";
 import { taskIdValidator } from "./validations.js";
 const router = express.Router();
 
-router.get("/api/tasks/user/:id", userIdValidator, getTaskByUserIdController);
+router.get("/user/:id", userIdValidator, getTaskByUserIdController);
 
-router.get("/api/task/:id", taskIdValidator, getTaskByIdController);
+router.get("/:id", taskIdValidator, getTaskByIdController);
 
-router.post("/api/task", createTaskController);
+router.post("", createTaskController);
 
-router.delete("/api/task/:id", taskIdValidator, deleteTaskController); //the task should be users task && the task should be exist
+router.delete("/:id", taskIdValidator, deleteTaskController); //the task should be users task && the task should be exist
 
-router.put("/api/task", updateTaskController); //the task should be users task && the task should be exist
+router.put("", updateTaskController); //the task should be users task && the task should be exist
 
 // router.delete("/api/todoall", async (req, res) => {
 //   try {
