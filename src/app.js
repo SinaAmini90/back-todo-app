@@ -15,7 +15,7 @@ app.get("/test", (req, res) => {
 });
 
 app.use("api/task", tasksRouter);
-app.use(userRouter);
+app.use("api/user", userRouter);
 
 app.use(notFoundHandler);
 

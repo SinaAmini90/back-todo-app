@@ -11,8 +11,8 @@ import {
 } from "./validations.js";
 
 const router = express.Router();
-router.get("/api/user/:id", userIdValidator, getUserByIdController);
-router.post("/api/signup", userInfoValidator, createUserController);
-router.put("/api/user", userEditValidator, updateUserController);
+router.get("/:id", userIdValidator, getUserByIdController);
+router.post("/signup", userInfoValidator, createUserController);
+router.put("", userEditValidator, updateUserController);
 
 export { router };
