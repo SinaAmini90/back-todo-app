@@ -3,13 +3,14 @@ import {
   getUserById,
   updateUser,
 } from "../../models/users/index.js";
+import { hashCreator } from "../../core/utils/encryption/index.js";
 
 function getUserByIdService(id) {
   const user = getUserById(id);
   return user;
 }
 
-function createUserService(
+async function createUserService(
   username,
   firstname,
   lastname,
@@ -17,13 +18,16 @@ function createUserService(
   email,
   password
 ) {
+  console.log(password);
+  const hashPassword = await hashCreator(password);
+  console.log(hashPassword);
   const user = createUser(
     username,
     firstname,
     lastname,
     phonenumber,
     email,
-    password
+    hashPassword
   );
   return user;
 }
