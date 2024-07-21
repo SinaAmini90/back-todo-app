@@ -3,6 +3,8 @@ import { router as tasksRouter } from "./modules/tasks/routes.js";
 import { router as userRouter } from "./modules/users/routes.js";
 import logReqData from "./core/middlewares/logReqData.js";
 import notFoundHandler from "./core/middlewares/errorHandler.js";
+import { hashCreator } from "./core/utils/encryption/index.js";
+console.log(hashCreator("1234"));
 
 const app = express();
 app.use(express.json());
@@ -14,8 +16,8 @@ app.get("/test", (req, res) => {
   });
 });
 
-app.use("api/task", tasksRouter);
-app.use("api/user", userRouter);
+app.use("/api/task", tasksRouter);
+app.use("/api/user", userRouter);
 
 app.use(notFoundHandler);
 
