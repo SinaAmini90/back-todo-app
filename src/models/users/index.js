@@ -27,10 +27,15 @@ async function createUser(
   return result.rows;
 }
 
-// async function deleteUser(id) {
-//   const queryContext = "delete from public.users where id=$1";
-//   const result = await query(queryContext, [id]);
-// }
+async function getUserByUsername(username) {
+  const queryContext = "select * from public.users where username = $1";
+  const result = await query(queryContext, [username]);
+  if (result) {
+    return result.rows[0];
+  } else {
+    return false;
+  }
+}
 
 async function updateUser(
   id,
@@ -54,4 +59,4 @@ async function updateUser(
   return result;
 }
 
-export { getUserById, updateUser, createUser };
+export { getUserById, updateUser, createUser, getUserByUsername };
