@@ -10,7 +10,6 @@ const getTaskByUserIdController = async (req, res, next) => {
     const userId = req.validated.id; //=validate req.params.id;
     const userTasks = await getUserTasksService(userId);
     res.json(userTasks);
-    next();
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -24,7 +23,6 @@ const getTaskByIdController = async (req, res, next) => {
     const taskId = req.validated.id; //=req.params.id;
     const task = await getTaskByIdService(taskId);
     res.json(task);
-    next();
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -56,7 +54,6 @@ const createTaskController = async (req, res, next) => {
     res.status(201).json({
       message: "the todo add successfully to database",
     });
-    next();
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -72,7 +69,6 @@ const deleteTaskController = async (req, res, next) => {
     res.status(201).json({
       message: "the todo delete successfully from database",
     });
-    next();
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -107,7 +103,6 @@ const updateTaskController = async (req, res, next) => {
     res.status(201).json({
       message: "the todo update successfully in database",
     });
-    next();
   } catch (error) {
     console.log(error);
     res.status(500).json({
