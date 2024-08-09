@@ -12,13 +12,17 @@ async function hashCreator(input) {
   }
 }
 
-async function hashValidator(input, hash) {
-  try {
-    const result = await bcrypt.compare(input, hash);
-    return result;
-  } catch (error) {
-    return error.message;
-  }
+function hashValidator(input, hash) {
+  bcrypt
+    .compare(input, hash)
+    .then((result) => {
+      console.log("result", result);
+      return result;
+    })
+    .catch((error) => {
+      console.error("Error during comparison:", error);
+      return false;
+    });
 }
 
 export { hashCreator, hashValidator };
