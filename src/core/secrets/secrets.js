@@ -10,4 +10,7 @@ const POSTGRES_CREDENTIALS = {
   port: PGPORT,
   ssl: PGSSL,
 };
-export { POSTGRES_CREDENTIALS };
+
+const JWT_SECRETS = process.env.SIGN_KEY;
+
+export { POSTGRES_CREDENTIALS, JWT_SECRETS };
