@@ -12,11 +12,11 @@ async function hashCreator(input) {
   }
 }
 
-function hashValidator(input, hash) {
-  bcrypt
+async function hashValidator(input, hash) {
+  await bcrypt
     .compare(input, hash)
     .then((result) => {
-      console.log("result", result);
+      JSON.stringify(result);
       return result;
     })
     .catch((error) => {
