@@ -5,7 +5,7 @@ import { router as userRouter } from "./modules/users/routes.js";
 import logReqData from "./core/middlewares/logReqData.js";
 import notFoundHandler from "./core/middlewares/errorHandler.js";
 import { hashCreator } from "./core/utils/encryption/index.js";
-console.log(hashCreator("1234"));
+import { authMiddleware } from "./core/middlewares/auth_middleware.js";
 
 // app.use(cors());
 const app = express();
@@ -18,7 +18,7 @@ app.get("/test", (req, res) => {
   });
 });
 
-app.use("/api/task", tasksRouter);
+app.use("/api/task", authMiddleware, tasksRouter);
 app.use("/api/user", userRouter);
 
 app.use(notFoundHandler);
