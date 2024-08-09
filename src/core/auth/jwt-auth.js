@@ -5,11 +5,11 @@ async function jwtSign(data) {
   return jwt.sign(data, JWT_SECRETS);
 }
 
-async function jwtValidator(jwt) {
+async function jwtValidator(token) {
   try {
-    return jwt.verify(jwt, JWT_SECRETS);
+    return jwt.verify(token, JWT_SECRETS);
   } catch (error) {
-    console.log(error);
+    console.error("JWT verification error:", error);
     return null;
   }
 }
