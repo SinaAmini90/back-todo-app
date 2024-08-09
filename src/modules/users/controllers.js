@@ -2,7 +2,8 @@ import {
   createUserService,
   getUserByIdService,
   updateUserService,
-} from "../../services/users/api.js";
+  loginUserService,
+} from "../../services/users/service.js";
 
 const getUserByIdController = async (req, res, next) => {
   try {
@@ -42,6 +43,22 @@ const createUserController = async (req, res, next) => {
   }
 };
 
+const loginUserController = async (req, res, next) => {
+  try {
+    const { username, password } = req.body;
+    const jwt = await loginUserService(username, password);
+    res.status(200).json({
+      jwt: jwt,
+    });
+    next();
+  } catch (error) {
+    console.log(error);
+    res.status(401).json({
+      message: error.message,
+    });
+  }
+};
+
 const updateUserController = async (req, res, next) => {
   try {
     const { id, username, firstname, lastname, phonenumber, email, password } =
@@ -66,4 +83,9 @@ const updateUserController = async (req, res, next) => {
     });
   }
 };
-export { getUserByIdController, createUserController, updateUserController };
+export {
+  loginUserController,
+  getUserByIdController,
+  createUserController,
+  updateUserController,
+};

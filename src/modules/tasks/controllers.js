@@ -4,7 +4,7 @@ import {
   createTaskService,
   deleteTaskService,
   updateTaskService,
-} from "../../services/tasks/api.js";
+} from "../../services/tasks/service.js";
 const getTaskByUserIdController = async (req, res, next) => {
   try {
     const userId = req.validated.id; //=validate req.params.id;

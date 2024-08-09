@@ -1,5 +1,5 @@
 import pg from "pg";
-import { POSTGRES_CREDENTIALS } from "../secrets/index.js";
+import { POSTGRES_CREDENTIALS } from "../secrets/secrets.js";
 
 const { Client } = pg;
 
