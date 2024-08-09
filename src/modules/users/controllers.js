@@ -10,7 +10,6 @@ const getUserByIdController = async (req, res, next) => {
     const userId = req.params.id;
     const user = await getUserByIdService(userId);
     res.json(user);
-    next();
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -34,7 +33,6 @@ const createUserController = async (req, res, next) => {
     res.status(201).json({
       message: "the user add successfully to database",
     });
-    next();
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -50,7 +48,6 @@ const loginUserController = async (req, res, next) => {
     res.status(200).json({
       jwt: jwt,
     });
-    next();
   } catch (error) {
     console.log(error);
     res.status(401).json({
@@ -75,7 +72,6 @@ const updateUserController = async (req, res, next) => {
     res.status(201).json({
       message: "the user update successfully in database",
     });
-    next();
   } catch (error) {
     console.log(error);
     res.status(500).json({
