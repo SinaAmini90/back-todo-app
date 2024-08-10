@@ -17,18 +17,18 @@ async function createTaskService(
   title,
   description,
   priority,
-  reminder,
+  deadlineDate,
+  deadlineTime,
   category_id,
-  deadline,
   user_id
 ) {
   const task = await createTask(
     title,
     description,
     priority,
-    reminder,
+    deadlineDate,
+    deadlineTime,
     category_id,
-    deadline,
     user_id
   );
   return task;
