@@ -1,17 +1,12 @@
 import { query } from "../../core/database/database-handler.js";
 
+//get all tasks of user
 async function getTasksByUserId(id) {
   const queryContext = "select * from public.tasks where user_id=$1";
   const result = await query(queryContext, [id]);
   return result.rows;
 }
-
-async function getTaskById(id) {
-  const queryContext = "select * from public.tasks where id=$1";
-  const result = await query(queryContext, [id]);
-  return result.rows;
-}
-
+//create task for user
 async function createTask(
   title,
   description,
@@ -34,18 +29,13 @@ async function createTask(
   ]);
   return result.rows;
 }
-
+//delete task
 async function deleteTask(id) {
   const queryContext = "delete from public.tasks where id=$1";
   const result = await query(queryContext, [id]);
   return result;
 }
-
-// async function deleteAllTodos() {
-//   const queryContext = "delete from public.todos";
-//   const result = await query(queryContext, []);
-// }
-
+//edit task
 async function updateTask(
   id,
   title,
@@ -57,8 +47,8 @@ async function updateTask(
   completed
 ) {
   const queryContext = `UPDATE public.tasks
-   SET title =$2,  description =$3, priority=$4,  reminder=$5,  category_id=$6,  deadline=$7,completed =$8 
-   WHERE id =$1 RETURNING *; `;
+  SET title =$2,  description =$3, priority=$4,  reminder=$5,  category_id=$6,  deadline=$7,completed =$8 
+  WHERE id =$1 RETURNING *; `;
   const result = await query(queryContext, [
     id,
     title,
@@ -69,8 +59,25 @@ async function updateTask(
     deadline,
     completed,
   ]);
+  console.log("result=>", result);
   return result.rows;
 }
+//give userId of task
+async function getUserIdOftask(id) {
+  const queryContext = "select * from public.tasks where id=$1";
+  const result = await query(queryContext, [id]);
+  return result.rows[0].user_id;
+}
+// async function getTaskById(id) {
+//   const queryContext = "select * from public.tasks where id=$1";
+//   const result = await query(queryContext, [id]);
+//   return result.rows;
+// }
+
+// async function deleteAllTodos() {
+//   const queryContext = "delete from public.todos";
+//   const result = await query(queryContext, []);
+// }
 
 // async function markAllAsComplite() {
 //   const queryContext = "UPDATE public.todos set is_completed=$1  RETURNING *";
@@ -80,10 +87,11 @@ async function updateTask(
 
 export {
   getTasksByUserId,
-  getTaskById,
   deleteTask,
   updateTask,
   createTask,
+  getUserIdOftask,
+  // getTaskById,
   //   deleteAllTodos,
   //   markAllAsComplite,
 };
