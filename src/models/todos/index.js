@@ -11,23 +11,28 @@ async function createTask(
   title,
   description,
   priority,
-  reminder,
+  deadlineDate,
+  deadlineTime,
   category_id,
-  deadline,
   user_id
 ) {
   const queryContext =
-    "insert into public.tasks (title, description, priority, reminder, category_id, deadline, user_id) values ($1,$2,$3,$4,$5,$6,$7) RETURNING *";
+    "insert into public.tasks (title, description, priority , deadlineDate , deadlineTime , category_id, user_id) values ($1,$2,$3,$4,$5,$6,$7) RETURNING *";
   const result = await query(queryContext, [
     title,
     description,
     priority,
-    reminder,
+    deadlineDate,
+    deadlineTime,
     category_id,
-    deadline,
     user_id,
   ]);
-  return result.rows;
+  if (result) {
+    return result.rows;
+  } else {
+    console.log("***database did not create the task***");
+    throw new Error("database error");
+  }
 }
 //delete task
 async function deleteTask(id) {
