@@ -1,7 +1,7 @@
 import express from "express";
 import {
   getTaskByUserIdController,
-  getTaskByIdController,
+  // getTaskByIdController,
   createTaskController,
   deleteTaskController,
   updateTaskController,
@@ -10,15 +10,16 @@ import { userIdValidator } from "../users/validations.js";
 import { taskIdValidator } from "./validations.js";
 const router = express.Router();
 
-router.get("/user/:id", userIdValidator, getTaskByUserIdController);
-
-router.get("/:id", taskIdValidator, getTaskByIdController);
-
+//get all tasks of user
+router.get("", getTaskByUserIdController);
+//creat task
 router.post("", createTaskController);
-
+//delete task
 router.delete("/:id", taskIdValidator, deleteTaskController); //the task should be users task && the task should be exist
-
+//edit task
 router.put("", updateTaskController); //the task should be users task && the task should be exist
+
+// router.get("/:id", taskIdValidator, getTaskByIdController);
 
 // router.delete("/api/todoall", async (req, res) => {
 //   try {
