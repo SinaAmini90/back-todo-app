@@ -1,13 +1,15 @@
 import {
   getUserTasksService,
-  getTaskByIdService,
+  // getTaskByIdService,
   createTaskService,
   deleteTaskService,
   updateTaskService,
 } from "../../services/tasks/service.js";
+
+//get all tasks of user
 const getTaskByUserIdController = async (req, res, next) => {
   try {
-    const userId = req.validated.id; //=validate req.params.id;
+    const userId = req.token.id; //=validate req.params.id;
     const userTasks = await getUserTasksService(userId);
     res.json(userTasks);
   } catch (error) {
@@ -17,31 +19,12 @@ const getTaskByUserIdController = async (req, res, next) => {
     });
   }
 };
-
-const getTaskByIdController = async (req, res, next) => {
-  try {
-    const taskId = req.validated.id; //=req.params.id;
-    const task = await getTaskByIdService(taskId);
-    res.json(task);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      message: error.message,
-    });
-  }
-};
-
+//create task
 const createTaskController = async (req, res, next) => {
   try {
-    const {
-      title,
-      description,
-      priority,
-      reminder,
-      category_id,
-      deadline,
-      user_id,
-    } = req.body;
+    const { title, description, priority, reminder, category_id, deadline } =
+      req.body;
+    user_id = req.token.id;
     await createTaskService(
       title,
       description,
@@ -61,11 +44,12 @@ const createTaskController = async (req, res, next) => {
     });
   }
 };
-
+//delete task
 const deleteTaskController = async (req, res, next) => {
   try {
-    const taskId = req.validated.id; //=req.params.id;
-    deleteTaskService(taskId);
+    const taskId = req.validated.id; // = req.params.id;
+    const userId = req.token.id;
+    deleteTaskService(taskId, userId);
     res.status(201).json({
       message: "the todo delete successfully from database",
     });
@@ -76,7 +60,7 @@ const deleteTaskController = async (req, res, next) => {
     });
   }
 };
-
+//edit task
 const updateTaskController = async (req, res, next) => {
   try {
     const {
@@ -89,7 +73,7 @@ const updateTaskController = async (req, res, next) => {
       deadline,
       completed,
     } = req.body;
-    // console.log( id, title, description, is_completed );
+    const userId = req.token.id;
     await updateTaskService(
       id,
       title,
@@ -98,7 +82,8 @@ const updateTaskController = async (req, res, next) => {
       reminder,
       category_id,
       deadline,
-      completed
+      completed,
+      userId
     );
     res.status(201).json({
       message: "the todo update successfully in database",
@@ -111,10 +96,22 @@ const updateTaskController = async (req, res, next) => {
   }
 };
 
+// const getTaskByIdController = async (req, res, next) => {
+//   try {
+//     const taskId = req.validated.id; //=req.params.id;
+//     const task = await getTaskByIdService(taskId);
+//     res.json(task);
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({
+//       message: error.message,
+//     });
+//   }
+// };
 export {
   deleteTaskController,
   getTaskByUserIdController,
-  getTaskByIdController,
+  // getTaskByIdController,
   updateTaskController,
   createTaskController,
 };
