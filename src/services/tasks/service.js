@@ -1,22 +1,19 @@
 import {
+  getUserIdOftask,
   getTasksByUserId,
-  getTaskById,
+  // getTaskById,
   createTask,
   deleteTask,
   updateTask,
 } from "../../models/todos/index.js";
 
-function getUserTasksService(id) {
-  const userTasks = getTasksByUserId(id);
+//get tasks of user
+async function getUserTasksService(id) {
+  const userTasks = await getTasksByUserId(id);
   return userTasks;
 }
-
-function getTaskByIdService(id) {
-  const task = getTaskById(id);
-  return task;
-}
-
-function createTaskService(
+//create new task
+async function createTaskService(
   title,
   description,
   priority,
@@ -25,7 +22,7 @@ function createTaskService(
   deadline,
   user_id
 ) {
-  const task = createTask(
+  const task = await createTask(
     title,
     description,
     priority,
@@ -36,12 +33,18 @@ function createTaskService(
   );
   return task;
 }
-
-function deleteTaskService(id) {
-  deleteTask(id);
+//delete a task
+async function deleteTaskService(id, user_id) {
+  const userIdOfTask = await getUserIdOftask(id);
+  if (userIdOfTask === user_id) {
+    await deleteTask(id);
+  } else {
+    console.log("userId and taskId are not related togther.");
+    throw new Error("user not allow to delete this task");
+  }
 }
-
-function updateTaskService(
+//edit a task
+async function updateTaskService(
   id,
   title,
   description,
@@ -49,24 +52,39 @@ function updateTaskService(
   reminder,
   category_id,
   deadline,
-  completed
+  completed,
+  user_id
 ) {
-  const task = updateTask(
-    id,
-    title,
-    description,
-    priority,
-    reminder,
-    category_id,
-    deadline,
-    completed
-  );
-  return task;
+  const userIdOfTask = await getUserIdOftask(id);
+  console.log(JSON.stringify(userIdOfTask));
+  console.log(user_id);
+  if (userIdOfTask === user_id) {
+    const task = await updateTask(
+      id,
+      title,
+      description,
+      priority,
+      reminder,
+      category_id,
+      deadline,
+      completed
+    );
+    return task;
+  } else {
+    console.log("userId and taskId are not related togther.");
+    throw new Error("user not allow to edit this task");
+  }
 }
+
+// function getTaskByIdService(id) {
+//   const task = getTaskById(id);
+//   return task;
+// }
+
 export {
   updateTaskService,
   deleteTaskService,
   getUserTasksService,
-  getTaskByIdService,
+  // getTaskByIdService,
   createTaskService,
 };
