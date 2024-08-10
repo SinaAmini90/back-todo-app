@@ -14,6 +14,7 @@ const authMiddleware = async (req, res, next) => {
     });
   }
   const jwtToken = authHeader.split(" ")[1];
+  console.log("jwtToken=>", jwtToken);
   if (!jwtToken) {
     res.status(401).json({
       message: "JWT Token is missing!",
@@ -21,6 +22,8 @@ const authMiddleware = async (req, res, next) => {
   }
   try {
     const tokenData = await jwtValidator(jwtToken);
+    console.log("tokenData=>", tokenData);
+
     req.token = tokenData;
     next();
   } catch (error) {
