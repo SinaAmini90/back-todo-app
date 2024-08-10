@@ -23,9 +23,7 @@ async function createUserService(
   email,
   password
 ) {
-  console.log(password);
   const hashPassword = await hashCreator(password);
-  console.log(hashPassword);
   const user = createUser(
     username,
     firstname,
@@ -50,7 +48,6 @@ function updateUserService(
 }
 async function loginUserService(username, password) {
   const user = await getUserByUsername(username);
-  console.log("userinfo=>", user);
   if (!user) {
     throw new Error("username is not correct");
   }
@@ -64,7 +61,7 @@ async function loginUserService(username, password) {
       username: user.username,
     };
     const userJwt = jwtSign(JwtUserData);
-    return;
+    return userJwt;
   }
 }
 
