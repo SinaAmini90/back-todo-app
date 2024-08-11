@@ -4,30 +4,39 @@ import { query } from "../../core/database/database-handler.js";
 async function getTasksByUserId(id) {
   const queryContext = "select * from public.tasks where user_id=$1";
   const result = await query(queryContext, [id]);
-  return result.rows;
+  if (result) {
+    return result.rows;
+  } else {
+    return null;
+  }
 }
 //create task for user
 async function createTask(
+  id,
   title,
   description,
   priority,
-  deadlineDate,
-  deadlineTime,
-  category_id,
+  deadLineDate,
+  deadLineTime,
+  category,
   user_id
 ) {
+  console.log("insertdata", deadLineDate, deadLineTime);
   const queryContext =
-    "insert into public.tasks (title, description, priority , deadlineDate , deadlineTime , category_id, user_id) values ($1,$2,$3,$4,$5,$6,$7) RETURNING *";
+    "insert into public.tasks (id, title, description, priority, deadlinedate, deadlinetime, category, user_id) values ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *";
   const result = await query(queryContext, [
+    id,
     title,
     description,
     priority,
-    deadlineDate,
-    deadlineTime,
-    category_id,
+    deadLineDate,
+    deadLineTime,
+    category,
     user_id,
   ]);
   if (result) {
+    console.log("result", result.rows);
+
     return result.rows;
   } else {
     console.log("***database did not create the task***");
@@ -47,12 +56,12 @@ async function updateTask(
   description,
   priority,
   reminder,
-  category_id,
+  category,
   deadline,
   completed
 ) {
   const queryContext = `UPDATE public.tasks
-  SET title =$2,  description =$3, priority=$4,  reminder=$5,  category_id=$6,  deadline=$7,completed =$8 
+  SET title =$2,  description =$3, priority=$4,  reminder=$5,  category=$6,  deadline=$7,completed =$8 
   WHERE id =$1 RETURNING *; `;
   const result = await query(queryContext, [
     id,
@@ -60,7 +69,7 @@ async function updateTask(
     description,
     priority,
     reminder,
-    category_id,
+    category,
     deadline,
     completed,
   ]);

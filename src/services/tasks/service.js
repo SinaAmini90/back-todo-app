@@ -14,21 +14,23 @@ async function getUserTasksService(id) {
 }
 //create new task
 async function createTaskService(
+  id,
   title,
   description,
   priority,
-  deadlineDate,
-  deadlineTime,
-  category_id,
+  deadLineDate,
+  deadLineTime,
+  category,
   user_id
 ) {
   const task = await createTask(
+    id,
     title,
     description,
     priority,
-    deadlineDate,
-    deadlineTime,
-    category_id,
+    deadLineDate,
+    deadLineTime,
+    category,
     user_id
   );
   return task;
@@ -50,7 +52,7 @@ async function updateTaskService(
   description,
   priority,
   reminder,
-  category_id,
+  category,
   deadline,
   completed,
   user_id
@@ -65,7 +67,7 @@ async function updateTaskService(
       description,
       priority,
       reminder,
-      category_id,
+      category,
       deadline,
       completed
     );

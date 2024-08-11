@@ -23,21 +23,23 @@ const getTaskByUserIdController = async (req, res, next) => {
 const createTaskController = async (req, res, next) => {
   try {
     const {
+      id,
       title,
       description,
       priority,
-      deadlineDate,
-      deadlineTime,
-      category_id,
+      deadlinedate,
+      deadlinetime,
+      category,
     } = req.body;
     const user_id = req.token.id;
     await createTaskService(
+      id,
       title,
       description,
       priority,
-      deadlineDate,
-      deadlineTime,
-      category_id,
+      deadlinedate,
+      deadlinetime,
+      category,
       user_id
     );
     res.status(201).json({
@@ -75,7 +77,7 @@ const updateTaskController = async (req, res, next) => {
       description,
       priority,
       reminder,
-      category_id,
+      category,
       deadline,
       completed,
     } = req.body;
@@ -86,7 +88,7 @@ const updateTaskController = async (req, res, next) => {
       description,
       priority,
       reminder,
-      category_id,
+      category,
       deadline,
       completed,
       userId
