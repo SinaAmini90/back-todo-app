@@ -59,6 +59,7 @@ async function loginUserService(username, password) {
     const JwtUserData = {
       id: user.id,
       username: user.username,
+      name: user.firstname + " " + user.lastname,
     };
     const userJwt = jwtSign(JwtUserData);
     return userJwt;
