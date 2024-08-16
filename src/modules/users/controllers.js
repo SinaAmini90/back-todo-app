@@ -31,11 +31,13 @@ const createUserController = async (req, res, next) => {
       password
     );
     res.status(201).json({
-      message: "the user add successfully to database",
+      success: true,
+      message: "The user was added successfully to the database",
     });
   } catch (error) {
     console.log(error);
     res.status(500).json({
+      successe: false,
       message: error.message,
     });
   }
