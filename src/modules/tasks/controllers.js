@@ -76,10 +76,9 @@ const updateTaskController = async (req, res, next) => {
       title,
       description,
       priority,
-      reminder,
+      deadLineDate,
+      deadLineTime,
       category,
-      deadline,
-      completed,
     } = req.body;
     const userId = req.token.id;
     await updateTaskService(
@@ -87,10 +86,9 @@ const updateTaskController = async (req, res, next) => {
       title,
       description,
       priority,
-      reminder,
+      deadLineDate,
+      deadLineTime,
       category,
-      deadline,
-      completed,
       userId
     );
     res.status(201).json({

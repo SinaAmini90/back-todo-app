@@ -51,10 +51,9 @@ async function updateTaskService(
   title,
   description,
   priority,
-  reminder,
+  deadLineDate,
+  deadLineTime,
   category,
-  deadline,
-  completed,
   user_id
 ) {
   const userIdOfTask = await getUserIdOftask(id);
@@ -66,10 +65,9 @@ async function updateTaskService(
       title,
       description,
       priority,
-      reminder,
-      category,
-      deadline,
-      completed
+      deadLineDate,
+      deadLineTime,
+      category
     );
     return task;
   } else {

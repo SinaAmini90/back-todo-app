@@ -55,23 +55,22 @@ async function updateTask(
   title,
   description,
   priority,
-  reminder,
-  category,
-  deadline,
-  completed
+  deadLineDate,
+  deadLineTime,
+  category
+  // user_id
 ) {
   const queryContext = `UPDATE public.tasks
-  SET title =$2,  description =$3, priority=$4,  reminder=$5,  category=$6,  deadline=$7,completed =$8 
+  SET title =$2,  description =$3, priority=$4,  deadLineDate=$5,  deadLineTime=$6,  category=$7 
   WHERE id =$1 RETURNING *; `;
   const result = await query(queryContext, [
     id,
     title,
     description,
     priority,
-    reminder,
+    deadLineDate,
+    deadLineTime,
     category,
-    deadline,
-    completed,
   ]);
   console.log("result=>", result);
   return result.rows;
