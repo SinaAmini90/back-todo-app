@@ -8,7 +8,6 @@ const query = async (query, params) => {
   await client.connect();
   try {
     const res = await client.query(query, params);
-    console.log(res.rows[0].message);
     return res;
   } catch (err) {
     console.error(err);
