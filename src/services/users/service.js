@@ -51,7 +51,7 @@ async function loginUserService(username, password) {
   if (!user) {
     throw new Error("username is not correct");
   }
-  const isValid = hashValidator(password, user.password);
+  const isValid = await hashValidator(password, user.password);
   if (!isValid) {
     throw new Error("password is not correct");
   }
