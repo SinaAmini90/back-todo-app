@@ -1,3 +1,4 @@
+import { getTaskById } from "../../models/todos/index.js";
 import Joi from "joi";
 //check structure of id is valid?
 const taskIdValidator = async (req, res, next) => {
@@ -48,5 +49,29 @@ const createTaskValidator = async (req, res, next) => {
       .json({ error: error.details.map((detail) => detail.message) });
   }
 };
+//check if task id exist? check if user and task has relation?
+const taskUserRelationValidator = async (req, res, next) => {
+  try {
+    const userId = req.token.id;
+    const taskId = req.body.id;
+    console.log("userId", userId, "taskId", taskId);
+    const task = await getTaskById(taskId);
+    console.log(task);
 
-export { taskIdValidator, createTaskValidator };
+    if (!task) {
+      return res.status(404).json({ error: "Task not found" });
+    }
+
+    if (task[0].user_id !== userId) {
+      return res
+        .status(403)
+        .json({ error: "You do not have permission to edit this task" });
+    }
+    next();
+  } catch (error) {
+    console.error("Error during user-task validation:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export { taskIdValidator, createTaskValidator, taskUserRelationValidator };

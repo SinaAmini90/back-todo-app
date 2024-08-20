@@ -7,7 +7,11 @@ import {
   updateTaskController,
 } from "./controllers.js";
 import { userIdValidator } from "../users/validations.js";
-import { taskIdValidator, createTaskValidator } from "./validations.js";
+import {
+  taskIdValidator,
+  createTaskValidator,
+  taskUserRelationValidator,
+} from "./validations.js";
 const router = express.Router();
 
 //get all tasks of user
@@ -17,7 +21,12 @@ router.post("", createTaskValidator, createTaskController);
 //delete task
 router.delete("/:id", taskIdValidator, deleteTaskController); //the task should be users task && the task should be exist
 //edit task
-router.put("", updateTaskController); //the task should be users task && the task should be exist
+router.put(
+  "",
+  createTaskValidator,
+  taskUserRelationValidator,
+  updateTaskController
+);
 
 // router.get("/:id", taskIdValidator, getTaskByIdController);
 

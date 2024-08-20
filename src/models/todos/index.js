@@ -81,11 +81,12 @@ async function getUserIdOftask(id) {
   const result = await query(queryContext, [id]);
   return result.rows[0].user_id;
 }
-// async function getTaskById(id) {
-//   const queryContext = "select * from public.tasks where id=$1";
-//   const result = await query(queryContext, [id]);
-//   return result.rows;
-// }
+
+async function getTaskById(id) {
+  const queryContext = "select * from public.tasks where id=$1";
+  const result = await query(queryContext, [id]);
+  return result.rows;
+}
 
 // async function deleteAllTodos() {
 //   const queryContext = "delete from public.todos";
@@ -104,7 +105,7 @@ export {
   updateTask,
   createTask,
   getUserIdOftask,
-  // getTaskById,
+  getTaskById,
   //   deleteAllTodos,
   //   markAllAsComplite,
 };
