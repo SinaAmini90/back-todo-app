@@ -13,16 +13,13 @@ async function hashCreator(input) {
 }
 
 async function hashValidator(input, hash) {
-  await bcrypt
-    .compare(input, hash)
-    .then((result) => {
-      JSON.stringify(result);
-      return result;
-    })
-    .catch((error) => {
-      console.error("Error during comparison:", error);
-      return false;
-    });
+  try {
+    const result = await bcrypt.compare(input, hash);
+    return result;
+  } catch (error) {
+    console.error("Error during comparison:", error);
+    return false;
+  }
 }
 
 export { hashCreator, hashValidator };
